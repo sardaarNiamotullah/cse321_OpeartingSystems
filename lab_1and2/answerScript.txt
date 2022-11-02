@@ -1,0 +1,262 @@
+****PROBLEM: 01****
+
+------a------,
+
+$ touch 19301151_1.txt 19301151_2.txt 19301151_3.txt 19301151_3.txt 19301151_4.txt
+$ mkdir niamotullahRatul1 niamotullahRatul2
+$ mv 19301151_1.txt 19301151_2.txt 19301151_3.txt niamotullahRatul1
+$ cp niamotullahRatul1/19301151_1.txt niamotullahRatul2/
+$ cp niamotullahRatul1/19301151_2.txt niamotullahRatul2/
+$ mkdir niamotullahRatul3
+$ cp -r niamotullahRatul1/ niamotullahRatul3/
+$ cd niamotullahRatul3
+$ ls -l
+$ cd ..
+$ chmod -R 755 niamotullahRatul3
+$ ls
+$ sudo mv niamotullahRatul3 /root
+$ rm -r *
+
+
+------b------,
+
+$ echo $0
+$ echo -e "BUS201: BUSINESS & HUMAN COMMUNICATION; Section: 5 \nCSE321: OPERATING SYSTEMS; Section: 5 \nCSE341: MICROPROCESSORS; Section: 4 \nCSE350: DIGITAL ELECTRONICS & PULSE TECHNIQUES; Section: 2" > course.txt
+$ grep -c "^CSE" course.txt
+
+
+------c------,
+
+$ su
+# cd /
+# cd root
+# ls -a
+
+
+------d------,
+
+
+$ for i in {1..20}; do printf "This is line number: $i \n" >> fileForCounting.txt; done
+$ sed -n '5,17p' fileForCounting.txt
+
+
+
+****PROBLEM: 02****
+
+------a------,
+
+#include <stdio.h>
+int main() {
+
+   int firstNumber;
+   scanf("%d", &firstNumber);
+   int secondNumber;
+   scanf("%d", &secondNumber);
+   char operator;
+   getchar();
+   scanf("%c", &operator);
+
+   if (firstNumber == secondNumber) {
+      printf("%d", firstNumber*secondNumber);
+   } else if (firstNumber > secondNumber) {
+      printf("%d", firstNumber - secondNumber);
+   } else {
+      printf("%d", firstNumber+secondNumber);
+   }
+   
+
+   return 0;
+}
+
+
+------b------,
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+
+    FILE *inputFile;
+    FILE *outputFile;
+
+    inputFile = fopen("problem2bInput.txt", "r");
+    outputFile = fopen("problem2bOutput.txt", "w");
+
+    char line[200];
+    char newLine[200];
+
+    for(int i=0; i < sizeof(line); i++) {
+        line[i] = 0;
+        newLine[i] = 0;
+    }
+
+    while(fgets(line, 200, inputFile)) {
+        int j = 0;
+        for(int i=0; i < (sizeof(line)-4); i++) {
+            if ((int)(line[i]) != 32) {
+                newLine[j] = line[i];
+                j++;
+            } else {
+                newLine[j] = line[i];
+                j++;
+                for (;i < (sizeof(line)-4); i++) {
+                    if ((int)(line[i]) != 32) {
+                        i--;
+                        break;
+                    }
+                }
+            }         
+        }
+        fprintf(outputFile, "%s", newLine);
+    }
+    return 0;
+}
+
+
+------c------,
+
+
+#include <stdio.h>
+
+int main() {
+    int validPassword = 0;
+
+    while (validPassword == 0) {
+        char password[60];
+        fgets(password, sizeof(password), stdin);
+        int digit = 0, lowercase = 0, uppercase = 0, special = 0;
+        int toPrint = 0;
+
+        for (int i = 0; i < strlen(password); i++) {
+
+            if ((int)(password[i]) > 47 && (int)(password[i]) < 58) { digit = 1;}
+            else if ((int)(password[i]) > 96 && (int)(password[i]) < 123) { lowercase = 1;}
+            else if ((int)(password[i]) > 64 && (int)(password[i]) < 91) { uppercase = 1;}
+            else if ((int)(password[i]) == 95 || (int)(password[i]) == 35 || (int)(password[i]) == 36 || (int)(password[i]) == 64) { special = 1;}
+        }
+
+        if (digit == 1 && lowercase == 1 && uppercase == 1 && special == 1) {
+            printf("OK");
+            break;
+        } else {
+            if (digit == 0) { toPrint++;}
+            if (lowercase == 0) { toPrint++;}
+            if (uppercase == 0) { toPrint++;}
+            if (special == 0) { toPrint++;}
+
+            for (int i = 0; i < toPrint; i++) {
+                if (digit == 0) {
+                    i++;
+                    if (toPrint == i) { break;}
+                    digit = 1;
+                    printf("Digit missing, ");
+                }
+                if (lowercase == 0) {
+                    i++;
+                    if (toPrint == i) { break;}
+                    lowercase = 1;
+                    printf("Lowercase character missing, ");
+                }
+                if (uppercase == 0) {
+                    i++;
+                    if (toPrint == i) { break;}
+                    uppercase = 1;
+                    printf("Uppercase character missing, ");
+                }
+                if (special == 0) {
+                    i++;
+                    if (toPrint == i) { break;}
+                    special = 1;
+                    printf("Special character missing, ");
+                }
+            }
+
+            if (digit == 0) { printf("Digit missing.\n");}
+            if (lowercase == 0) { printf("Lowercase character missing.\n");}
+            if (uppercase == 0) { printf("Uppercase character missing.\n");}
+            if (special == 0) { printf("Special character missing.\n");}
+        }
+    }
+
+    return 0;
+}
+
+
+------d------,
+
+#include <stdio.h>
+
+int main() {
+
+    char email[50];
+    char refmail[10] = "@sheba.xyz";
+    int bchecker = 1;
+
+    fgets(email, sizeof(email), stdin);
+
+    if (strlen(email) > 10) {
+        int i = strlen(email) - 1;
+        int z = i - 10;
+        int k = strlen(refmail) -1;
+
+        for ( ; i >= z; i--) {
+            if (email[i] != refmail[k]) {
+                bchecker = 0;
+                break;
+            }
+            k--;
+        }
+
+        if (bchecker == 0) {
+            printf("Email address is outdated.");
+        }
+        else {
+            printf("Email address is okay.");
+        }
+    }
+    else {
+        printf("Email address is outdated.");
+    }
+
+    return 0;
+}
+
+
+
+------e------,
+
+#include <stdio.h>
+
+int main() {
+
+    char word[100];
+    fgets(word, sizeof(word), stdin);
+    int bChecker = 1;
+    int len = strlen(word);
+    int mid = len/2 - 1;
+    int k = len - 2;
+
+    for (int i = 0; i < len-1; i++) {
+        if ((int)(word[i]) > 64 && (int)(word[i]) < 91) {
+            word[i] = (int)(word[i]) + 32;
+        }
+    }
+
+    for (int i = 0; i < mid; i++) {
+        if (word[i] == word[k]) {
+            k--;
+            continue;
+        } else {
+            bChecker = 0;
+            break;
+        }
+    }
+
+    if (bChecker == 1) {
+        printf("Palindrome");
+    } else {
+        printf("Not Palindrome");
+    }
+
+    return 0;
+}
